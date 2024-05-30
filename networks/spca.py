@@ -103,7 +103,6 @@ class Spca_layer(nn.Module):
         nn.init.xavier_uniform_(self.clusters)
         self.pi = nn.Parameter(torch.ones(1, K)/K)
         self.cov = nn.Parameter(torch.ones(1, K))
-        # self.proj_kv = ConvDimReduction(inputdim, local_dim)
         self.proj_kv = nn.Conv2d(inputdim, local_dim, kernel_size=(1, 1), stride=1, padding=0, bias=False)
         self.p_norm = nn.LayerNorm(K * multi)
         self.norm_templates = nn.LayerNorm(local_dim)
