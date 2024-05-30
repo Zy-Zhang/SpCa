@@ -289,8 +289,8 @@ class MetricLogger(object):
         iter_time = AverageMeter()
         space_fmt = ':' + str(len(str(len(iterable)))) + 'd'
         if torch.cuda.is_available():
-            log_msg = self.delimiter.join([header, '[{0' + space_fmt + '}/{1}]', '{meters}'])
-            # log_msg = self.delimiter.join([header, '[{0' + space_fmt + '}/{1}]', 'eta: {eta}', '{meters}', 'iter time: {time} s', 'max mem: {memory:.0f} MB'])
+            # log_msg = self.delimiter.join([header, '[{0' + space_fmt + '}/{1}]', '{meters}'])
+            log_msg = self.delimiter.join([header, '[{0' + space_fmt + '}/{1}]', 'eta: {eta}', '{meters}', 'iter time: {time} s', 'max mem: {memory:.0f} MB'])
         else:
             log_msg = self.delimiter.join([header, '[{0' + space_fmt + '}/{1}]', 'eta: {eta}', '{meters}', 'iter time: {time} s'])
 
@@ -304,8 +304,8 @@ class MetricLogger(object):
                 eta_string = str(datetime.timedelta(seconds=int(eta_seconds)))
                 if torch.cuda.is_available():
                     total_memory = torch.cuda.max_memory_allocated() / MB
-                    print(log_msg.format(i, len(iterable), meters=str(self)))
-                    # print(log_msg.format(i, len(iterable), eta=eta_string, meters=str(self), time=str(iter_time), memory=total_memory))
+                    # print(log_msg.format(i, len(iterable), meters=str(self)))
+                    print(log_msg.format(i, len(iterable), eta=eta_string, meters=str(self), time=str(iter_time), memory=total_memory))
                 else:
                     print(log_msg.format(i, len(iterable), eta=eta_string, meters=str(self), time=str(iter_time)))
             i += 1
