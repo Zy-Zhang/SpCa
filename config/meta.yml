@@ -1,0 +1,6 @@
+outputdim: 2048
+K: 16
+local_dim: 128
+combine: 'cro'
+multi: 1
+pretrained: None
