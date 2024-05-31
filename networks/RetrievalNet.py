@@ -8,9 +8,6 @@ from torch.cuda.amp.autocast_mode import autocast
 from .backbone import ResNet, ResNet_STAGE45, ResNet_STAGE4, weights_init, constant_init
 import numpy as np
 
-from cirtorch.layers.loss import DecorrelationAttentionLoss
-from .clip_ import load as clipload
-
 eps_fea_norm = 1e-5
 eps_l2_norm = 1e-10
 
