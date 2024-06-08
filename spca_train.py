@@ -16,12 +16,7 @@ from dataset import ImageFromList, GLDv2_lmdb
 from networks import Token, SpCa
 from utils import MetricLogger, create_optimizer, init_distributed_mode, is_main_process, get_rank, optimizer_to
 from utils import compute_map_and_print, extract_vectors
-from utils.helpfunc import get_checkpoint_root, freeze_weights, unfreeze_weights, load_checkpoint # get_data_root
-
-# from cirtorch.datasets.testdataset import configdataset
-# from cirtorch.utils.general import get_data_root
-# from cirtorch.utils.plot_logger import PlotLogger
-
+from utils.helpfunc import get_checkpoint_root, freeze_weights, unfreeze_weights, load_checkpoint
 
 def topk_errors(preds, labels, ks):
     """Computes the top-k error for each k."""
@@ -130,10 +125,6 @@ def main(args):
         meta['multi'] = args.multi
         meta['pretrained'] = args.pretrained
         model = SpCa(args.outputdim, args.classifier_num, meta, args.tau, args.margin, args.backbone).to(device)
-    elif args.model.startswith('clip'):
-        model = CLIP_VPT(512, args.classifier_num, args.num_prompt).to(device)
-    elif args.model.startswith('vit'):
-        model = ViTReNet(num_classes = args.classifier_num, dynamic_img_size = True, pretrained = args.model).to(device)
     else:
         raise ValueError('Unsupported or unknown model: {}!'.format(args.model))
 
@@ -186,8 +177,7 @@ def main(args):
     val_Error_Logger = {'Top1 error': [], 'Top5 error': []}
     min_val = 100.0
 
-    for epoch in range(start_epoch, args.num_epochs):
-        
+    for epoch in range(start_epoch, args.num_epochs): 
         if isinstance(train_loader.sampler, DistributedSampler):
             train_loader.sampler.set_epoch(epoch + 1 + get_rank())
         
